@@ -1,14 +1,64 @@
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    //I could not get time to work even while googling things and attempting multiple things.
 
+    private static long startTime;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Please enter an integer for the array length.");
+            int arrayLength = scanner.nextInt();
+            startTime();
+            int[] array = createRandomArray(arrayLength);
+            endTime();
+            System.out.println("Time to create a integer of the array length: " + arrayLength + " and took " + (double) ((System.currentTimeMillis() - startTime) / 1000) + " seconds");
+            System.out.println();
+            int[] sortedArray = mergeSort(array);
+            System.out.println("Merge sort integer of current array of length: " + arrayLength);
+            printArray(sortedArray);
+            System.out.println("The sorted array is in the correct order: " + isSorted(sortedArray));
+            System.out.println();
+            bubbleSort(array);
+            System.out.println("Bubble sort integer of current array of length: " + arrayLength + " and took " + ((System.currentTimeMillis() - startTime) / 1000) + " seconds");
+            System.out.println("Merged Sort and Bubble sort created the same result? Answer: " + Arrays.equals(sortedArray , array));
+            printArray(array);
+
+            System.out.println();
+            System.out.println("Would you like to continue? Yes or no?");
+            String answer = scanner.next();
+            if (answer.equals("no")) break;
+        }
+        scanner.close();
+        System.out.println("Goodbye!");
+    }
+
+    public static void startTime() {
+        startTime = System.currentTimeMillis();
+    }
+
+    public static void endTime() {
+        long nowMils = System.currentTimeMillis();
+        System.out.print("took: " + (int) (nowMils - startTime) / 1000); 
+        System.out.println();
+    }
+
+    public static boolean isSorted(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void printArray(int[] array) {
         for (int i : array) {
-            System.out.println(i + " ");
+            System.out.print(i + " ");
         }
         System.out.println();
     }
@@ -57,4 +107,13 @@ public class Main {
             return mergedArray;
         }
     }
+
+    public static int[] createRandomArray(int arrayLength) {
+		int[] array = new int[arrayLength];
+		Random r = new Random();
+		for (int i = 0; i < array.length; i++) {
+			array[i] = r.nextInt(100);
+		}
+		return array;
+	}
 }
