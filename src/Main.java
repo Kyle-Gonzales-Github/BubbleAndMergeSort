@@ -10,23 +10,32 @@ public class Main {
         while (true) {
             System.out.println("Please enter an integer for the array length.");
             int arrayLength = scanner.nextInt();
-            int[] array = createRandomArray(arrayLength);
             startTime = System.currentTimeMillis();
+            int[] array = createRandomArray(arrayLength);
             double arrayTime = Double.valueOf((double) (System.currentTimeMillis() - startTime) / 1000D);
-            System.out.println("Time to create a integer of the array length: " + arrayLength);
+            System.out.printf("\nThe time of creating an Array for size %d is %.6fs\n", new Object[] {
+                Integer.valueOf(arrayLength), arrayTime});
             System.out.println();
+
+            startTime = System.currentTimeMillis();
             int[] sortedArray = mergeSort(array);
             System.out.println("Merge sort integer of current array of length: " + arrayLength);
             printArray(sortedArray);
+            double sortedTime = Double.valueOf((double) (System.currentTimeMillis() - startTime) / 1000D);
+            System.out.printf("\nThe time of sorting the array using merge sort for size %d is %.6fs\n", new Object[] {
+                Integer.valueOf(arrayLength), sortedTime});
             System.out.println("The sorted array is in the correct order: " + isSorted(sortedArray));
             System.out.println();
-            bubbleSort(array);
-            System.out.println("Bubble sort integer of current array of length: " + arrayLength + " and took " + ((System.currentTimeMillis() - startTime) / 1000) + " seconds");
-            System.out.println("Merged Sort and Bubble sort created the same result? Answer: " + Arrays.equals(sortedArray , array));
-            printArray(array);
 
-            System.out.printf("\nThe time of MergeSort  for size %d is %.6fs\n", new Object[] {
-                Integer.valueOf(arrayLength), arrayTime});
+            startTime = System.currentTimeMillis();
+            int[] bubbleArray = bubbleSort(array);
+            System.out.println("Bubble sort integer of current array of length: " + arrayLength);
+            double bubbleTime = Double.valueOf((double) (System.currentTimeMillis() - startTime) / 1000D);
+            System.out.printf("\nThe time of sorting the array using bubble sort for size %d is %.6fs\n", new Object[] {
+                Integer.valueOf(arrayLength), bubbleTime});
+            System.out.println("Merged Sort and Bubble sort created the same result? Answer: " + Arrays.equals(sortedArray , array));
+            System.out.println();
+            printArray(bubbleArray);
 
             System.out.println();
             System.out.println("Would you like to continue? Yes or no?");
@@ -53,7 +62,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void bubbleSort(int[] array) {
+    public static int[] bubbleSort(int[] array) {
         for (int i = array.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (array[j] > array[j + 1]) {
@@ -63,6 +72,7 @@ public class Main {
                 }
             }
         }
+        return array;
     }
 
     public static int[] merge(int[] array1, int[] array2) {
@@ -102,7 +112,7 @@ public class Main {
 		int[] array = new int[arrayLength];
 		Random r = new Random();
 		for (int i = 0; i < array.length; i++) {
-			array[i] = r.nextInt(100);
+			array[i] = r.nextInt(1000);
 		}
 		return array;
 	}
